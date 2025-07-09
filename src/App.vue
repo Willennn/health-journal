@@ -439,12 +439,7 @@
         <HistoryCalendar v-if="currentView === 'history'" />
 
         <!-- Analytics -->
-        <div v-if="currentView === 'analytics'" class="text-center py-16">
-          <div class="text-6xl mb-4">📊</div>
-          <h3 class="text-2xl font-bold text-theme-primary mb-4">Analytics</h3>
-          <p class="text-theme-muted mb-8">Les graphiques et analyses arrivent bientôt !</p>
-          <div class="text-sm text-theme-muted">Phase 3 en cours de développement</div>
-        </div>
+        <Analytics v-if="currentView === 'analytics'" />
       </main>
 
       <!-- Modal humeur rapide -->
@@ -501,6 +496,7 @@ import { useJournalStore } from '@/stores/journal'
 import ThemeToggle from '@/components/ui/ThemeToggle.vue'
 import JournalEntry from '@/components/JournalEntry.vue'
 import HistoryCalendar from '@/components/HistoryCalendar.vue'
+import Analytics from '@/components/Analytics.vue'
 
 const authStore = useAuthStore()
 const themeStore = useThemeStore()
