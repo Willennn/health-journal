@@ -206,6 +206,7 @@
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
+<<<<<<< HEAD
               <button 
                 @click="currentView = 'badges'"
                 :class="[
@@ -259,6 +260,8 @@
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
+=======
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
             </nav>
           </div>
 
@@ -493,11 +496,14 @@
 
         <!-- Analytics -->
         <Analytics v-if="currentView === 'analytics'" />
+<<<<<<< HEAD
 
         <!-- NOUVEAUX COMPOSANTS PHASE 4 -->
         <BadgeSystem v-if="currentView === 'badges'" />
         <NotificationSystem v-if="currentView === 'notifications'" />
         <SmartSuggestions v-if="currentView === 'suggestions'" />
+=======
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       </main>
 
       <!-- Modal humeur rapide -->
@@ -555,10 +561,13 @@ import ThemeToggle from '@/components/ui/ThemeToggle.vue'
 import JournalEntry from '@/components/JournalEntry.vue'
 import HistoryCalendar from '@/components/HistoryCalendar.vue'
 import Analytics from '@/components/Analytics.vue'
+<<<<<<< HEAD
 import BadgeSystem from '@/components/BadgeSystem.vue'
 import NotificationSystem from '@/components/NotificationSystem.vue'
 import SmartSuggestions from '@/components/SmartSuggestions.vue'
 
+=======
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
 
 const authStore = useAuthStore()
 const themeStore = useThemeStore()

@@ -14,6 +14,7 @@ export const useJournalStore = defineStore('journal', () => {
     totalPoints: 0
   })
 
+<<<<<<< HEAD
   // Fonctions utilitaires
   function formatDate(date = new Date()) {
     return date.toISOString().split('T')[0]
@@ -51,6 +52,12 @@ export const useJournalStore = defineStore('journal', () => {
   }
 
   // Getters calculés
+=======
+  const formatDate = (date = new Date()) => {
+    return date.toISOString().split('T')[0]
+  }
+
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
   const getTodayEntry = computed(() => {
     const today = formatDate()
     return entries.value[today] || createEmptyEntry()
@@ -60,6 +67,7 @@ export const useJournalStore = defineStore('journal', () => {
     const result = []
     const today = new Date()
     
+<<<<<<< HEAD
     // Obtenir le lundi de cette semaine
     const mondayOfWeek = new Date(today)
     const dayOfWeek = today.getDay() // 0 = dimanche, 1 = lundi, etc.
@@ -83,6 +91,17 @@ export const useJournalStore = defineStore('journal', () => {
         dayNumber: date.getDate().toString().padStart(2, '0'),
         progress: entry ? calculateProgress(entry) : 0,
         isToday: dateStr === formatDate()
+=======
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date(today)
+      date.setDate(date.getDate() - i)
+      const dateStr = formatDate(date)
+      
+      result.push({
+        date: dateStr,
+        entry: entries.value[dateStr] || createEmptyEntry(),
+        dayName: date.toLocaleDateString('fr-FR', { weekday: 'short' })
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       })
     }
     
@@ -90,6 +109,7 @@ export const useJournalStore = defineStore('journal', () => {
   })
 
   const getCurrentStreak = computed(() => {
+<<<<<<< HEAD
     const dates = Object.keys(entries.value).sort().reverse()
     let streak = 0
     let currentDate = new Date()
@@ -101,6 +121,18 @@ export const useJournalStore = defineStore('journal', () => {
       if (daysDiff === streak && isEntryComplete(entries.value[dateStr])) {
         streak++
         currentDate = entryDate
+=======
+    let streak = 0
+    const today = new Date()
+    
+    for (let i = 0; i < 365; i++) {
+      const date = new Date(today)
+      date.setDate(date.getDate() - i)
+      const dateStr = formatDate(date)
+      
+      if (entries.value[dateStr] && isEntryComplete(entries.value[dateStr])) {
+        streak++
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       } else {
         break
       }
@@ -111,6 +143,7 @@ export const useJournalStore = defineStore('journal', () => {
 
   const getTodayProgress = computed(() => {
     const today = getTodayEntry.value
+<<<<<<< HEAD
     if (!today) return { overall: 0, sleep: 0, mood: 0, activity: 0, food: 0 }
     
     const sleep = (today.sleep?.bedTime && today.sleep?.wakeTime) ? 25 : 0
@@ -128,6 +161,64 @@ export const useJournalStore = defineStore('journal', () => {
   })
 
   // Actions principales
+=======
+    const progress = {
+      sleep: false,
+      mood: false,
+      activity: false,
+      food: false,
+      overall: 0
+    }
+
+    if (today.sleep.bedTime && today.sleep.wakeTime) {
+      progress.sleep = true
+    }
+    
+    if (today.mood.score > 0) {
+      progress.mood = true
+    }
+    
+    if (today.activity.length > 0) {
+      progress.activity = true
+    }
+    
+    if (today.food.length > 0) {
+      progress.food = true
+    }
+
+    const completed = Object.values(progress).filter(p => p === true).length
+    progress.overall = Math.round((completed / 4) * 100)
+
+    return progress
+  })
+
+  function createEmptyEntry() {
+    return {
+      sleep: {
+        bedTime: null,
+        wakeTime: null,
+        quality: 0,
+        notes: ''
+      },
+      mood: {
+        score: 0,
+        emoji: '',
+        tags: [],
+        notes: ''
+      },
+      activity: [],
+      food: []
+    }
+  }
+
+  function isEntryComplete(entry) {
+    return entry.sleep.bedTime && 
+           entry.sleep.wakeTime && 
+           entry.mood.score > 0 &&
+           entry.activity.length > 0
+  }
+
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
   function updateEntry(date, section, data) {
     const dateStr = typeof date === 'string' ? date : formatDate(date)
     
@@ -157,6 +248,7 @@ export const useJournalStore = defineStore('journal', () => {
     updateAchievements()
   }
 
+<<<<<<< HEAD
   // Nouvelles méthodes pour les composants refactorisés
   function updateSleep(date, sleepData) {
     updateEntry(date, 'sleep', sleepData)
@@ -166,6 +258,8 @@ export const useJournalStore = defineStore('journal', () => {
     updateEntry(date, 'mood', moodData)
   }
 
+=======
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
   function addActivity(date, activity) {
     const dateStr = typeof date === 'string' ? date : formatDate(date)
     
@@ -178,7 +272,11 @@ export const useJournalStore = defineStore('journal', () => {
       type: activity.type || 'Autre',
       duration: activity.duration || 0,
       intensity: activity.intensity || 'Modérée',
+<<<<<<< HEAD
       calories: activity.calories || estimateCalories(activity.type, activity.duration, activity.intensity),
+=======
+      calories: activity.calories || 0,
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       notes: activity.notes || '',
       time: activity.time || new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
     }
@@ -199,8 +297,12 @@ export const useJournalStore = defineStore('journal', () => {
       id: Date.now(),
       meal: foodItem.meal || 'Collation',
       description: foodItem.description || '',
+<<<<<<< HEAD
       notes: foodItem.notes || '',
       quality: foodItem.quality || null,
+=======
+      photo: foodItem.photo || null,
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       time: foodItem.time || new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
     }
 
@@ -316,6 +418,26 @@ export const useJournalStore = defineStore('journal', () => {
     achievements.value.totalPoints = (completeEntries * 10) + (achievements.value.streaks.current * 5)
   }
 
+<<<<<<< HEAD
+=======
+  function getSleepDuration(entry) {
+    if (!entry.sleep.bedTime || !entry.sleep.wakeTime) return 0
+    
+    const bedTime = new Date(`2000-01-01 ${entry.sleep.bedTime}`)
+    let wakeTime = new Date(`2000-01-01 ${entry.sleep.wakeTime}`)
+    
+    if (wakeTime < bedTime) {
+      wakeTime.setDate(wakeTime.getDate() + 1)
+    }
+    
+    return (wakeTime - bedTime) / (1000 * 60 * 60)
+  }
+
+  function getTotalActivityMinutes(entry) {
+    return entry.activity.reduce((total, activity) => total + (activity.duration || 0), 0)
+  }
+
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
   function saveToStorage() {
     const authStore = JSON.parse(localStorage.getItem('health_journal_user') || '{}')
     const userId = authStore.id || 'guest'
@@ -379,8 +501,11 @@ export const useJournalStore = defineStore('journal', () => {
     getCurrentStreak,
     getTodayProgress,
     updateEntry,
+<<<<<<< HEAD
     updateSleep,
     updateMood,
+=======
+>>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
     addActivity,
     addFood,
     removeActivity,
