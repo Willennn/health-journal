@@ -6,7 +6,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const isGuest = ref(false)
   const isLoading = ref(false)
-  
+
   let msalInstance = null
   let isInitialized = false
 
@@ -28,13 +28,13 @@ export const useAuthStore = defineStore('auth', () => {
     if (!isInitialized && !msalInstance) {
       msalInstance = new msal.PublicClientApplication({
         auth: {
-          clientId: import.meta.env.VITE_APP_OAUTH_CLIENT_ID
+          clientId: "e8137439-4d1d-462d-a85f-f81cfea8f0d8"
         },
         cache: {
           cacheLocation: "sessionStorage"
         }
       })
-      
+
       await msalInstance.initialize()
       isInitialized = true
       console.log('MSAL initialisé avec succès')
@@ -43,16 +43,16 @@ export const useAuthStore = defineStore('auth', () => {
 
   const loginWithMicrosoft = async () => {
     isLoading.value = true
-    
+
     try {
       await ensureInitialized()
-      
+
       console.log('Début de la connexion Microsoft...')
       const authResult = await msalInstance.loginPopup(requestedScopes)
-      
+
       if (authResult && authResult.account) {
         msalInstance.setActiveAccount(authResult.account)
-        
+
         const authenticatedUser = {
           id: authResult.account.homeAccountId,
           name: authResult.account.name,
@@ -61,17 +61,17 @@ export const useAuthStore = defineStore('auth', () => {
           avatar: null,
           authenticatedAt: new Date().toISOString()
         }
-        
+
         user.value = authenticatedUser
         isGuest.value = false
-        
+
         localStorage.setItem('health_journal_user', JSON.stringify(authenticatedUser))
         localStorage.setItem('health_journal_is_guest', 'false')
-        
+
         console.log('Connexion Microsoft réussie:', authenticatedUser)
         return authenticatedUser
       }
-      
+
     } catch (error) {
       console.error('Erreur lors de la connexion Microsoft:', error)
       if (error.name === 'BrowserAuthError' && error.errorCode === 'popup_window_error') {
@@ -93,13 +93,13 @@ export const useAuthStore = defineStore('auth', () => {
       provider: 'guest',
       authenticatedAt: new Date().toISOString()
     }
-    
+
     user.value = guestUser
     isGuest.value = true
-    
+
     localStorage.setItem('health_journal_user', JSON.stringify(guestUser))
     localStorage.setItem('health_journal_is_guest', 'true')
-    
+
     console.log('Connexion en mode invité:', guestUser)
     return guestUser
   }
@@ -111,13 +111,13 @@ export const useAuthStore = defineStore('auth', () => {
       )
       if (!confirmed) return false
     }
-    
+
     try {
       if (!isGuest.value && msalInstance) {
         await ensureInitialized()
         await msalInstance.logoutPopup()
       }
-      
+
       if (isGuest.value) {
         const userData = JSON.parse(localStorage.getItem('health_journal_data') || '{}')
         if (userData.users && userData.users.guest) {
@@ -125,16 +125,16 @@ export const useAuthStore = defineStore('auth', () => {
           localStorage.setItem('health_journal_data', JSON.stringify(userData))
         }
       }
-      
+
       user.value = null
       isGuest.value = false
-      
+
       localStorage.removeItem('health_journal_user')
       localStorage.removeItem('health_journal_is_guest')
-      
+
       console.log('Déconnexion réussie')
       return true
-      
+
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error)
       user.value = null
@@ -148,12 +148,12 @@ export const useAuthStore = defineStore('auth', () => {
   const initializeAuth = async () => {
     const savedUser = localStorage.getItem('health_journal_user')
     const savedIsGuest = localStorage.getItem('health_journal_is_guest')
-    
+
     if (savedUser) {
       user.value = JSON.parse(savedUser)
       isGuest.value = savedIsGuest === 'true'
       console.log('Session restaurée:', user.value)
-      
+
       if (!isGuest.value) {
         try {
           await ensureInitialized()

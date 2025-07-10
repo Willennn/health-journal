@@ -310,7 +310,6 @@ export const useJournalStore = defineStore('journal', () => {
   }
 
   function updatePoints() {
-    const totalEntries = Object.keys(entries.value).length
     const completeEntries = Object.values(entries.value).filter(isEntryComplete).length
 
     achievements.value.totalPoints = (completeEntries * 10) + (achievements.value.streaks.current * 5)

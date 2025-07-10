@@ -23,7 +23,7 @@
         <span class="mr-2">📊</span>
         Votre état de santé actuel
       </h3>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div class="text-center p-4 rounded-lg" :class="healthScore.overall >= 80 ? 'bg-emerald-50 dark:bg-emerald-900/20' : healthScore.overall >= 60 ? 'bg-yellow-50 dark:bg-yellow-900/20' : 'bg-red-50 dark:bg-red-900/20'">
           <div class="text-2xl mb-2">{{ healthScore.overall >= 80 ? '🌟' : healthScore.overall >= 60 ? '⚡' : '⚠️' }}</div>
@@ -132,7 +132,7 @@
             </div>
           </div>
           <div class="flex items-center space-x-2">
-            <span 
+            <span
               :class="[
                 'text-xs px-2 py-1 rounded',
                 suggestion.priority === 'high' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' :
@@ -196,7 +196,7 @@
         <span class="mr-2">🎯</span>
         Progression vers vos objectifs
       </h3>
-      
+
       <div class="space-y-4">
         <div
           v-for="goal in goalProgress"
@@ -210,16 +210,16 @@
             </div>
             <span class="text-sm font-bold text-theme-primary">{{ goal.progress }}%</span>
           </div>
-          
+
           <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
-            <div 
+            <div
               class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500"
               :style="{ width: `${goal.progress}%` }"
             ></div>
           </div>
-          
+
           <div class="text-xs text-theme-muted">{{ goal.description }}</div>
-          
+
           <div v-if="goal.suggestion" class="mt-2 text-xs text-purple-600 dark:text-purple-400">
             💡 {{ goal.suggestion }}
           </div>
@@ -233,7 +233,7 @@
         <span class="mr-2">📈</span>
         Tendances détectées
       </h3>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div
           v-for="trend in trends"
@@ -243,7 +243,7 @@
           <div class="flex items-center space-x-2 mb-2">
             <span class="text-xl">{{ trend.icon }}</span>
             <span class="font-medium text-theme-primary">{{ trend.title }}</span>
-            <span 
+            <span
               :class="[
                 'text-xs px-2 py-1 rounded',
                 trend.direction === 'up' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300' :
@@ -336,7 +336,7 @@ const allSuggestions = computed(() => {
   if (sleepData.length > 0) {
     const avgSleep = sleepData.reduce((sum, e) => sum + journalStore.getSleepDuration(e), 0) / sleepData.length
     const avgQuality = sleepData.reduce((sum, e) => sum + (e.sleep.quality || 5), 0) / sleepData.length
-    
+
     if (avgSleep < 7) {
       suggestions.push({
         id: 'sleep_duration',
@@ -403,7 +403,7 @@ const allSuggestions = computed(() => {
   const moodData = entries.filter(e => e.mood?.score > 0)
   if (moodData.length > 0) {
     const avgMood = moodData.reduce((sum, e) => sum + e.mood.score, 0) / moodData.length
-    
+
     if (avgMood < 6) {
       suggestions.push({
         id: 'improve_mood',
@@ -490,8 +490,8 @@ const totalSuggestions = computed(() => {
 
 // Progression des objectifs
 const goalProgress = computed(() => {
-  const entries = Object.values(journalStore.entries).slice(-7)
-  
+  //const entries = Object.values(journalStore.entries).slice(-7)
+
   return [
     {
       id: 'sleep_goal',
@@ -579,7 +579,7 @@ const trends = computed(() => {
 // Actions sur les suggestions
 function applySuggestion(suggestion, action) {
   console.log('Applying suggestion:', suggestion.title, 'Action:', action.label)
-  
+
   switch (action.id) {
     case 'earlier_bedtime':
       // Logique pour ajuster l'heure de coucher
@@ -636,7 +636,7 @@ function applySuggestion(suggestion, action) {
 
 function showSleepGuide() {
   alert(`Guide d'hygiène du sommeil :
-  
+
 1. 🕘 Couchez-vous et levez-vous à heures fixes
 2. 📱 Évitez les écrans 1h avant le coucher
 3. 🌡️ Maintenez une température fraîche (18-20°C)
@@ -648,10 +648,10 @@ function showSleepGuide() {
 
 function showRelaxationTechniques() {
   alert(`Techniques de relaxation pour mieux dormir :
-  
+
 🫁 Respiration 4-7-8 :
 - Inspirez 4 secondes
-- Retenez 7 secondes  
+- Retenez 7 secondes
 - Expirez 8 secondes
 - Répétez 4 fois
 
@@ -667,10 +667,10 @@ function showRelaxationTechniques() {
 
 function showNutritionTips() {
   alert(`Conseils nutrition pour votre bien-être :
-  
+
 🥗 Équilibre des repas :
 - 1/2 assiette de légumes
-- 1/4 de protéines  
+- 1/4 de protéines
 - 1/4 de féculents complets
 
 💧 Hydratation :
@@ -691,7 +691,7 @@ function showNutritionTips() {
 
 function showMotivationTips() {
   alert(`Conseils pour rester motivé :
-  
+
 🎯 Fixez des objectifs SMART :
 - Spécifiques, Mesurables, Atteignables
 - Commencez petit (5 min/jour)

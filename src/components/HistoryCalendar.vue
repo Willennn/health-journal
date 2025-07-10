@@ -6,7 +6,7 @@
         <h2 class="text-3xl font-bold text-theme-primary">Historique</h2>
         <p class="text-theme-secondary mt-2">Visualisez vos données de santé</p>
       </div>
-      
+
       <!-- Filtres de vue -->
       <div class="flex items-center space-x-4">
         <div class="flex bg-theme-secondary p-1 rounded-lg">
@@ -16,8 +16,8 @@
             @click="currentView = view.id"
             :class="[
               'px-4 py-2 rounded-md text-sm font-medium transition-all',
-              currentView === view.id 
-                ? 'bg-theme-primary text-theme-primary shadow-sm' 
+              currentView === view.id
+                ? 'bg-theme-primary text-theme-primary shadow-sm'
                 : 'text-theme-muted hover:text-theme-secondary'
             ]"
           >
@@ -31,7 +31,7 @@
     <div v-if="currentView === 'calendar'" class="card p-6">
       <!-- Navigation du mois -->
       <div class="flex items-center justify-between mb-6">
-        <button 
+        <button
           @click="changeMonth(-1)"
           class="p-2 rounded-lg bg-theme-secondary hover:bg-theme-card transition-colors"
         >
@@ -39,12 +39,12 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        
+
         <h3 class="text-xl font-semibold text-theme-primary">
           {{ formatMonthYear(currentMonth) }}
         </h3>
-        
-        <button 
+
+        <button
           @click="changeMonth(1)"
           :disabled="isCurrentMonth"
           :class="[
@@ -61,17 +61,17 @@
       <!-- Grille du calendrier -->
       <div class="grid grid-cols-7 gap-1 mb-4">
         <!-- Jours de la semaine -->
-        <div 
-          v-for="day in dayNames" 
+        <div
+          v-for="day in dayNames"
           :key="day"
           class="p-3 text-center text-sm font-medium text-theme-muted"
         >
           {{ day }}
         </div>
-        
+
         <!-- Cases du calendrier -->
-        <div 
-          v-for="date in calendarDays" 
+        <div
+          v-for="date in calendarDays"
           :key="date.dateString"
           @click="selectDate(date)"
           :class="[
@@ -87,7 +87,7 @@
             ]">
               {{ date.day }}
             </span>
-            
+
             <!-- Indicateur de données -->
             <div v-if="date.hasData" class="flex space-x-1">
               <div v-if="date.entry?.sleep?.bedTime" class="w-2 h-2 bg-blue-500 rounded-full"></div>
@@ -96,11 +96,11 @@
               <div v-if="date.entry?.food?.length > 0" class="w-2 h-2 bg-red-500 rounded-full"></div>
             </div>
           </div>
-          
+
           <!-- Score de progression -->
           <div v-if="date.hasData" class="text-center">
             <div class="text-xs text-theme-muted mb-1">{{ date.completionScore }}%</div>
-            <div 
+            <div
               :class="[
                 'h-1 rounded-full',
                 getProgressBarClass(date.completionScore)
@@ -136,8 +136,8 @@
 
     <!-- Vue Liste -->
     <div v-if="currentView === 'list'" class="space-y-4">
-      <div 
-        v-for="entry in recentEntries" 
+      <div
+        v-for="entry in recentEntries"
         :key="entry.date"
         class="card p-6"
       >
@@ -150,7 +150,7 @@
               {{ getDaysAgo(entry.date) }}
             </p>
           </div>
-          
+
           <!-- Score global -->
           <div class="text-center">
             <div class="text-2xl font-bold text-theme-primary">{{ entry.completionScore }}%</div>
@@ -201,8 +201,8 @@
         <div v-if="entry.data.mood?.tags?.length > 0" class="mt-4">
           <div class="text-xs text-theme-muted mb-2">Ressentis :</div>
           <div class="flex flex-wrap gap-1">
-            <span 
-              v-for="tag in entry.data.mood.tags" 
+            <span
+              v-for="tag in entry.data.mood.tags"
               :key="tag"
               class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-xs"
             >
@@ -318,8 +318,8 @@
               <div v-if="selectedDateDetail.data.mood.tags?.length > 0">
                 <p>Ressentis :</p>
                 <div class="flex flex-wrap gap-1 mt-1">
-                  <span 
-                    v-for="tag in selectedDateDetail.data.mood.tags" 
+                  <span
+                    v-for="tag in selectedDateDetail.data.mood.tags"
                     :key="tag"
                     class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded text-xs"
                   >
@@ -337,8 +337,8 @@
               <span class="mr-2">🏃</span> Activité
             </h4>
             <div class="space-y-2">
-              <div 
-                v-for="activity in selectedDateDetail.data.activity" 
+              <div
+                v-for="activity in selectedDateDetail.data.activity"
                 :key="activity.id"
                 class="text-sm bg-theme-secondary rounded p-2"
               >
@@ -356,8 +356,8 @@
               <span class="mr-2">🍎</span> Alimentation
             </h4>
             <div class="space-y-2">
-              <div 
-                v-for="food in selectedDateDetail.data.food" 
+              <div
+                v-for="food in selectedDateDetail.data.food"
                 :key="food.id"
                 class="text-sm bg-theme-secondary rounded p-2"
               >
@@ -397,30 +397,29 @@ const dayNames = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
 
 const isCurrentMonth = computed(() => {
   const now = new Date()
-  return currentMonth.value.getFullYear() === now.getFullYear() && 
+  return currentMonth.value.getFullYear() === now.getFullYear() &&
          currentMonth.value.getMonth() === now.getMonth()
 })
 
 const calendarDays = computed(() => {
   const year = currentMonth.value.getFullYear()
   const month = currentMonth.value.getMonth()
-  
+
   const firstDay = new Date(year, month, 1)
-  const lastDay = new Date(year, month + 1, 0)
   const startDate = new Date(firstDay)
-  
+
   // Commencer au lundi de la semaine
   const dayOfWeek = (firstDay.getDay() + 6) % 7
   startDate.setDate(startDate.getDate() - dayOfWeek)
-  
+
   const days = []
   const current = new Date(startDate)
-  
+
   // Générer 42 jours (6 semaines)
   for (let i = 0; i < 42; i++) {
     const dateString = journalStore.formatDate(current)
     const entry = journalStore.entries[dateString]
-    
+
     days.push({
       date: new Date(current),
       dateString,
@@ -431,17 +430,17 @@ const calendarDays = computed(() => {
       entry,
       completionScore: entry ? getCompletionScore(entry) : 0
     })
-    
+
     current.setDate(current.getDate() + 1)
   }
-  
+
   return days
 })
 
 const recentEntries = computed(() => {
   const entries = []
   const dates = Object.keys(journalStore.entries).sort().reverse()
-  
+
   for (const date of dates.slice(0, 10)) {
     const entry = journalStore.entries[date]
     entries.push({
@@ -450,7 +449,7 @@ const recentEntries = computed(() => {
       completionScore: getCompletionScore(entry)
     })
   }
-  
+
   return entries
 })
 
@@ -462,7 +461,7 @@ const averageMood = computed(() => {
   const moods = Object.values(journalStore.entries)
     .map(entry => entry.mood?.score || 0)
     .filter(score => score > 0)
-  
+
   return moods.length > 0 ? moods.reduce((a, b) => a + b, 0) / moods.length : 0
 })
 
@@ -470,7 +469,7 @@ const averageSleep = computed(() => {
   const sleepDurations = Object.values(journalStore.entries)
     .map(entry => journalStore.getSleepDuration(entry))
     .filter(duration => duration > 0)
-  
+
   return sleepDurations.length > 0 ? sleepDurations.reduce((a, b) => a + b, 0) / sleepDurations.length : 0
 })
 
@@ -480,9 +479,9 @@ const totalActivity = computed(() => {
 })
 
 const formatMonthYear = (date) => {
-  return date.toLocaleDateString('fr-FR', { 
-    month: 'long', 
-    year: 'numeric' 
+  return date.toLocaleDateString('fr-FR', {
+    month: 'long',
+    year: 'numeric'
   })
 }
 
@@ -500,7 +499,7 @@ const getDaysAgo = (dateString) => {
   const today = new Date()
   const diffTime = Math.abs(today - date)
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-  
+
   if (diffDays === 0) return "Aujourd'hui"
   if (diffDays === 1) return "Hier"
   return `Il y a ${diffDays} jours`
@@ -523,21 +522,21 @@ const selectDate = (date) => {
 
 const getDateClass = (date) => {
   let classes = []
-  
+
   if (!date.isCurrentMonth) {
     classes.push('text-theme-muted bg-theme-secondary')
   } else {
     classes.push('border-theme hover:border-emerald-300')
   }
-  
+
   if (date.isToday) {
     classes.push('ring-2 ring-emerald-500')
   }
-  
+
   if (date.hasData) {
     classes.push('cursor-pointer hover:bg-theme-secondary')
   }
-  
+
   return classes.join(' ')
 }
 
