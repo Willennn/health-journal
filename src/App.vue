@@ -10,7 +10,7 @@
         <div class="text-center mb-8 animate-fade-in">
           <div class="mx-auto w-16 h-16 mb-4 rounded-full gradient-wellness flex items-center justify-center">
             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
           </div>
@@ -47,7 +47,7 @@
             class="w-full bg-theme-secondary hover:bg-theme-card disabled:bg-theme-muted text-theme-primary font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center"
           >
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
             Continuer en mode invité
@@ -70,7 +70,7 @@
           <div class="card p-4 text-center">
             <div class="w-8 h-8 mx-auto mb-2 text-emerald-500">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
@@ -81,7 +81,7 @@
           <div class="card p-4 text-center">
             <div class="w-8 h-8 mx-auto mb-2 text-violet-500">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
@@ -110,7 +110,7 @@
                 <!-- Petit indicateur de progression -->
                 <div class="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 rounded-full border-2 border-white"></div>
               </div>
-              
+
               <!-- Titre avec gradient à CÔTÉ de l'icône -->
               <div>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent">
@@ -119,15 +119,15 @@
                 <p class="text-xs text-theme-muted -mt-1">Votre bien-être quotidien</p>
               </div>
             </div>
-            
+
             <!-- Navigation -->
             <nav class="hidden md:flex space-x-6">
-              <button 
+              <button
                 @click="currentView = 'dashboard'"
                 :class="[
                   'pb-2 transition-colors relative',
-                  currentView === 'dashboard' 
-                    ? 'text-emerald-500' 
+                  currentView === 'dashboard'
+                    ? 'text-emerald-500'
                     : 'text-theme-secondary hover:text-theme-primary'
                 ]"
               >
@@ -138,18 +138,18 @@
                   </svg>
                   <span>Dashboard</span>
                 </span>
-                <div 
+                <div
                   v-if="currentView === 'dashboard'"
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
-              
-              <button 
+
+              <button
                 @click="currentView = 'journal'"
                 :class="[
                   'pb-2 transition-colors relative',
-                  currentView === 'journal' 
-                    ? 'text-emerald-500' 
+                  currentView === 'journal'
+                    ? 'text-emerald-500'
                     : 'text-theme-secondary hover:text-theme-primary'
                 ]"
               >
@@ -159,18 +159,18 @@
                   </svg>
                   <span>Journal</span>
                 </span>
-                <div 
+                <div
                   v-if="currentView === 'journal'"
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
-              
-              <button 
+
+              <button
                 @click="currentView = 'history'"
                 :class="[
                   'pb-2 transition-colors relative',
-                  currentView === 'history' 
-                    ? 'text-emerald-500' 
+                  currentView === 'history'
+                    ? 'text-emerald-500'
                     : 'text-theme-secondary hover:text-theme-primary'
                 ]"
               >
@@ -180,18 +180,18 @@
                   </svg>
                   <span>Historique</span>
                 </span>
-                <div 
+                <div
                   v-if="currentView === 'history'"
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
-              
-              <button 
+
+              <button
                 @click="currentView = 'analytics'"
                 :class="[
                   'pb-2 transition-colors relative',
-                  currentView === 'analytics' 
-                    ? 'text-emerald-500' 
+                  currentView === 'analytics'
+                    ? 'text-emerald-500'
                     : 'text-theme-secondary hover:text-theme-primary'
                 ]"
               >
@@ -201,67 +201,66 @@
                   </svg>
                   <span>Analytics</span>
                 </span>
-                <div 
+                <div
                   v-if="currentView === 'analytics'"
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
-<<<<<<< HEAD
-              <button 
+
+              <button
                 @click="currentView = 'badges'"
                 :class="[
                   'pb-2 transition-colors relative',
-                  currentView === 'badges' 
-                    ? 'text-emerald-500' 
+                  currentView === 'badges'
+                    ? 'text-emerald-500'
                     : 'text-theme-secondary hover:text-theme-primary'
                 ]"
               >
                 <span class="flex items-center space-x-2">
                   <span>🏆 Badges</span>
                 </span>
-                <div 
+                <div
                   v-if="currentView === 'badges'"
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
 
-              <button 
+              <button
                 @click="currentView = 'notifications'"
                 :class="[
                   'pb-2 transition-colors relative',
-                  currentView === 'notifications' 
-                    ? 'text-emerald-500' 
+                  currentView === 'notifications'
+                    ? 'text-emerald-500'
                     : 'text-theme-secondary hover:text-theme-primary'
                 ]"
               >
                 <span class="flex items-center space-x-2">
                   <span>🔔 Rappels</span>
                 </span>
-                <div 
+                <div
                   v-if="currentView === 'notifications'"
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
 
-              <button 
+              <button
                 @click="currentView = 'suggestions'"
                 :class="[
                   'pb-2 transition-colors relative',
-                  currentView === 'suggestions' 
-                    ? 'text-emerald-500' 
+                  currentView === 'suggestions'
+                    ? 'text-emerald-500'
                     : 'text-theme-secondary hover:text-theme-primary'
                 ]"
               >
                 <span class="flex items-center space-x-2">
                   <span>🤖 Suggestions</span>
                 </span>
-                <div 
+                <div
                   v-if="currentView === 'suggestions'"
                   class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full"
                 ></div>
               </button>
-=======
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
+
             </nav>
           </div>
 
@@ -270,7 +269,7 @@
             <!-- Indicateur de progression quotidienne -->
             <div v-if="journalStore.getTodayProgress" class="hidden sm:flex items-center space-x-2 text-sm">
               <div class="w-16 h-2 bg-theme-card rounded-full overflow-hidden">
-                <div 
+                <div
                   class="h-full bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-500"
                   :style="{ width: `${journalStore.getTodayProgress.overall}%` }"
                 ></div>
@@ -280,23 +279,23 @@
 
             <!-- Toggle thème -->
             <ThemeToggle />
-            
+
             <!-- Profil utilisateur -->
             <div class="flex items-center space-x-3">
               <div class="hidden sm:block text-right">
                 <div class="text-sm font-medium text-theme-primary">{{ authStore.user?.name || 'Utilisateur' }}</div>
                 <div class="text-xs text-theme-muted">{{ authStore.isAuthenticated ? 'Connecté' : 'Mode invité' }}</div>
               </div>
-              
+
               <!-- Avatar -->
               <div class="relative">
-                <img 
+                <img
                   v-if="authStore.user?.picture"
-                  :src="authStore.user.picture" 
+                  :src="authStore.user.picture"
                   :alt="authStore.user.name"
                   class="w-8 h-8 rounded-full border-2 border-emerald-200"
                 />
-                <div 
+                <div
                   v-else
                   class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-medium text-sm"
                 >
@@ -305,9 +304,9 @@
                 <!-- Indicateur de connexion -->
                 <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
               </div>
-              
+
               <!-- Menu utilisateur -->
-              <button 
+              <button
                 @click="handleLogout"
                 class="text-theme-secondary hover:text-theme-primary transition-colors"
                 title="Se déconnecter"
@@ -322,7 +321,7 @@
 
         <!-- Navigation mobile -->
         <nav class="md:hidden mt-4 flex space-x-4 overflow-x-auto pb-2">
-          <button 
+          <button
             v-for="view in mobileViews"
             :key="view.id"
             @click="currentView = view.id"
@@ -496,14 +495,11 @@
 
         <!-- Analytics -->
         <Analytics v-if="currentView === 'analytics'" />
-<<<<<<< HEAD
 
         <!-- NOUVEAUX COMPOSANTS PHASE 4 -->
         <BadgeSystem v-if="currentView === 'badges'" />
         <NotificationSystem v-if="currentView === 'notifications'" />
         <SmartSuggestions v-if="currentView === 'suggestions'" />
-=======
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       </main>
 
       <!-- Modal humeur rapide -->
@@ -553,7 +549,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
 import { useJournalStore } from '@/stores/journal'
@@ -561,16 +557,12 @@ import ThemeToggle from '@/components/ui/ThemeToggle.vue'
 import JournalEntry from '@/components/JournalEntry.vue'
 import HistoryCalendar from '@/components/HistoryCalendar.vue'
 import Analytics from '@/components/Analytics.vue'
-<<<<<<< HEAD
 import BadgeSystem from '@/components/BadgeSystem.vue'
 import NotificationSystem from '@/components/NotificationSystem.vue'
 import SmartSuggestions from '@/components/SmartSuggestions.vue'
 
-=======
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
-
 const authStore = useAuthStore()
-const themeStore = useThemeStore()
+useThemeStore()
 const journalStore = useJournalStore()
 
 const currentView = ref('dashboard')
@@ -624,12 +616,12 @@ const mobileViews = [
 const getGreetingMessage = () => {
   const hour = new Date().getHours()
   const progress = journalStore.getTodayProgress?.overall || 0
-  
+
   let timeGreeting = ''
   if (hour < 12) timeGreeting = 'Bonne matinée'
   else if (hour < 17) timeGreeting = 'Bon après-midi'
   else timeGreeting = 'Bonne soirée'
-  
+
   if (progress === 0) {
     return `${timeGreeting} ! Prêt à commencer votre journal de santé ?`
   } else if (progress < 50) {

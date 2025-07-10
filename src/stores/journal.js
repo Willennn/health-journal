@@ -14,7 +14,6 @@ export const useJournalStore = defineStore('journal', () => {
     totalPoints: 0
   })
 
-<<<<<<< HEAD
   // Fonctions utilitaires
   function formatDate(date = new Date()) {
     return date.toISOString().split('T')[0]
@@ -32,32 +31,26 @@ export const useJournalStore = defineStore('journal', () => {
   function isEntryComplete(entry) {
     if (!entry) return false
     return (
-      entry.sleep?.bedTime && 
-      entry.sleep?.wakeTime && 
-      entry.mood?.score > 0 && 
+      entry.sleep?.bedTime &&
+      entry.sleep?.wakeTime &&
+      entry.mood?.score > 0 &&
       entry.activity?.length > 0
     )
   }
 
   function calculateProgress(entry) {
     if (!entry) return 0
-    
+
     let score = 0
     if (entry.sleep?.bedTime && entry.sleep?.wakeTime) score += 25
     if (entry.mood?.score > 0) score += 25
     if (entry.activity?.length > 0) score += 25
     if (entry.food?.length > 0) score += 25
-    
+
     return score
   }
 
   // Getters calculés
-=======
-  const formatDate = (date = new Date()) => {
-    return date.toISOString().split('T')[0]
-  }
-
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
   const getTodayEntry = computed(() => {
     const today = formatDate()
     return entries.value[today] || createEmptyEntry()
@@ -66,24 +59,23 @@ export const useJournalStore = defineStore('journal', () => {
   const getWeekEntries = computed(() => {
     const result = []
     const today = new Date()
-    
-<<<<<<< HEAD
+
     // Obtenir le lundi de cette semaine
     const mondayOfWeek = new Date(today)
     const dayOfWeek = today.getDay() // 0 = dimanche, 1 = lundi, etc.
     const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1
     mondayOfWeek.setDate(today.getDate() - daysToSubtract)
-    
+
     // Générer les 7 jours de la semaine à partir du lundi
     for (let i = 0; i < 7; i++) {
       const date = new Date(mondayOfWeek)
       date.setDate(mondayOfWeek.getDate() + i)
       const dateStr = formatDate(date)
       const entry = entries.value[dateStr]
-      
+
       // Noms des jours en français (commence par lundi)
       const dayNames = ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim']
-      
+
       result.push({
         date: dateStr,
         data: entry,
@@ -91,66 +83,41 @@ export const useJournalStore = defineStore('journal', () => {
         dayNumber: date.getDate().toString().padStart(2, '0'),
         progress: entry ? calculateProgress(entry) : 0,
         isToday: dateStr === formatDate()
-=======
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date(today)
-      date.setDate(date.getDate() - i)
-      const dateStr = formatDate(date)
-      
-      result.push({
-        date: dateStr,
-        entry: entries.value[dateStr] || createEmptyEntry(),
-        dayName: date.toLocaleDateString('fr-FR', { weekday: 'short' })
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       })
     }
-    
+
     return result
   })
 
   const getCurrentStreak = computed(() => {
-<<<<<<< HEAD
     const dates = Object.keys(entries.value).sort().reverse()
     let streak = 0
     let currentDate = new Date()
-    
+
     for (const dateStr of dates) {
       const entryDate = new Date(dateStr)
       const daysDiff = Math.floor((currentDate - entryDate) / (1000 * 60 * 60 * 24))
-      
+
       if (daysDiff === streak && isEntryComplete(entries.value[dateStr])) {
         streak++
         currentDate = entryDate
-=======
-    let streak = 0
-    const today = new Date()
-    
-    for (let i = 0; i < 365; i++) {
-      const date = new Date(today)
-      date.setDate(date.getDate() - i)
-      const dateStr = formatDate(date)
-      
-      if (entries.value[dateStr] && isEntryComplete(entries.value[dateStr])) {
-        streak++
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       } else {
         break
       }
     }
-    
+
     return streak
   })
 
   const getTodayProgress = computed(() => {
     const today = getTodayEntry.value
-<<<<<<< HEAD
     if (!today) return { overall: 0, sleep: 0, mood: 0, activity: 0, food: 0 }
-    
+
     const sleep = (today.sleep?.bedTime && today.sleep?.wakeTime) ? 25 : 0
     const mood = today.mood?.score > 0 ? 25 : 0
     const activity = today.activity?.length > 0 ? 25 : 0
     const food = today.food?.length > 0 ? 25 : 0
-    
+
     return {
       overall: sleep + mood + activity + food,
       sleep,
@@ -161,67 +128,9 @@ export const useJournalStore = defineStore('journal', () => {
   })
 
   // Actions principales
-=======
-    const progress = {
-      sleep: false,
-      mood: false,
-      activity: false,
-      food: false,
-      overall: 0
-    }
-
-    if (today.sleep.bedTime && today.sleep.wakeTime) {
-      progress.sleep = true
-    }
-    
-    if (today.mood.score > 0) {
-      progress.mood = true
-    }
-    
-    if (today.activity.length > 0) {
-      progress.activity = true
-    }
-    
-    if (today.food.length > 0) {
-      progress.food = true
-    }
-
-    const completed = Object.values(progress).filter(p => p === true).length
-    progress.overall = Math.round((completed / 4) * 100)
-
-    return progress
-  })
-
-  function createEmptyEntry() {
-    return {
-      sleep: {
-        bedTime: null,
-        wakeTime: null,
-        quality: 0,
-        notes: ''
-      },
-      mood: {
-        score: 0,
-        emoji: '',
-        tags: [],
-        notes: ''
-      },
-      activity: [],
-      food: []
-    }
-  }
-
-  function isEntryComplete(entry) {
-    return entry.sleep.bedTime && 
-           entry.sleep.wakeTime && 
-           entry.mood.score > 0 &&
-           entry.activity.length > 0
-  }
-
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
   function updateEntry(date, section, data) {
     const dateStr = typeof date === 'string' ? date : formatDate(date)
-    
+
     if (!entries.value[dateStr]) {
       entries.value[dateStr] = createEmptyEntry()
     }
@@ -248,7 +157,6 @@ export const useJournalStore = defineStore('journal', () => {
     updateAchievements()
   }
 
-<<<<<<< HEAD
   // Nouvelles méthodes pour les composants refactorisés
   function updateSleep(date, sleepData) {
     updateEntry(date, 'sleep', sleepData)
@@ -258,11 +166,9 @@ export const useJournalStore = defineStore('journal', () => {
     updateEntry(date, 'mood', moodData)
   }
 
-=======
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
   function addActivity(date, activity) {
     const dateStr = typeof date === 'string' ? date : formatDate(date)
-    
+
     if (!entries.value[dateStr]) {
       entries.value[dateStr] = createEmptyEntry()
     }
@@ -272,11 +178,7 @@ export const useJournalStore = defineStore('journal', () => {
       type: activity.type || 'Autre',
       duration: activity.duration || 0,
       intensity: activity.intensity || 'Modérée',
-<<<<<<< HEAD
       calories: activity.calories || estimateCalories(activity.type, activity.duration, activity.intensity),
-=======
-      calories: activity.calories || 0,
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       notes: activity.notes || '',
       time: activity.time || new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
     }
@@ -288,7 +190,7 @@ export const useJournalStore = defineStore('journal', () => {
 
   function addFood(date, foodItem) {
     const dateStr = typeof date === 'string' ? date : formatDate(date)
-    
+
     if (!entries.value[dateStr]) {
       entries.value[dateStr] = createEmptyEntry()
     }
@@ -297,12 +199,8 @@ export const useJournalStore = defineStore('journal', () => {
       id: Date.now(),
       meal: foodItem.meal || 'Collation',
       description: foodItem.description || '',
-<<<<<<< HEAD
       notes: foodItem.notes || '',
       quality: foodItem.quality || null,
-=======
-      photo: foodItem.photo || null,
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
       time: foodItem.time || new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
     }
 
@@ -312,7 +210,7 @@ export const useJournalStore = defineStore('journal', () => {
 
   function removeActivity(date, activityId) {
     const dateStr = typeof date === 'string' ? date : formatDate(date)
-    
+
     if (entries.value[dateStr]) {
       entries.value[dateStr].activity = entries.value[dateStr].activity.filter(
         activity => activity.id !== activityId
@@ -323,7 +221,7 @@ export const useJournalStore = defineStore('journal', () => {
 
   function removeFood(date, foodId) {
     const dateStr = typeof date === 'string' ? date : formatDate(date)
-    
+
     if (entries.value[dateStr]) {
       entries.value[dateStr].food = entries.value[dateStr].food.filter(
         food => food.id !== foodId
@@ -345,29 +243,29 @@ export const useJournalStore = defineStore('journal', () => {
       'Football': 9,
       'Tennis': 7
     }
-    
+
     const intensityMultiplier = {
       'Légère': 0.8,
       'Modérée': 1.0,
       'Intense': 1.3
     }
-    
+
     const base = baseCalories[type] || 5
     const multiplier = intensityMultiplier[intensity] || 1.0
-    
+
     return Math.round(base * duration * multiplier)
   }
 
   function getSleepDuration(entry) {
     if (!entry?.sleep?.bedTime || !entry?.sleep?.wakeTime) return 0
-    
+
     const bedTime = new Date(`2000-01-01 ${entry.sleep.bedTime}`)
     let wakeTime = new Date(`2000-01-01 ${entry.sleep.wakeTime}`)
-    
+
     if (wakeTime < bedTime) {
       wakeTime.setDate(wakeTime.getDate() + 1)
     }
-    
+
     return (wakeTime - bedTime) / (1000 * 60 * 60)
   }
 
@@ -383,7 +281,7 @@ export const useJournalStore = defineStore('journal', () => {
 
   function updateAchievements() {
     const currentStreak = getCurrentStreak.value
-    
+
     if (currentStreak > achievements.value.streaks.best) {
       achievements.value.streaks.best = currentStreak
     }
@@ -396,7 +294,7 @@ export const useJournalStore = defineStore('journal', () => {
 
   function checkForNewBadges(streak) {
     const badges = achievements.value.badges
-    
+
     if (streak >= 1 && !badges.includes('first_entry')) {
       badges.push('first_entry')
     }
@@ -414,40 +312,20 @@ export const useJournalStore = defineStore('journal', () => {
   function updatePoints() {
     const totalEntries = Object.keys(entries.value).length
     const completeEntries = Object.values(entries.value).filter(isEntryComplete).length
-    
+
     achievements.value.totalPoints = (completeEntries * 10) + (achievements.value.streaks.current * 5)
   }
 
-<<<<<<< HEAD
-=======
-  function getSleepDuration(entry) {
-    if (!entry.sleep.bedTime || !entry.sleep.wakeTime) return 0
-    
-    const bedTime = new Date(`2000-01-01 ${entry.sleep.bedTime}`)
-    let wakeTime = new Date(`2000-01-01 ${entry.sleep.wakeTime}`)
-    
-    if (wakeTime < bedTime) {
-      wakeTime.setDate(wakeTime.getDate() + 1)
-    }
-    
-    return (wakeTime - bedTime) / (1000 * 60 * 60)
-  }
-
-  function getTotalActivityMinutes(entry) {
-    return entry.activity.reduce((total, activity) => total + (activity.duration || 0), 0)
-  }
-
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
   function saveToStorage() {
     const authStore = JSON.parse(localStorage.getItem('health_journal_user') || '{}')
     const userId = authStore.id || 'guest'
-    
+
     const existingData = JSON.parse(localStorage.getItem('health_journal_data') || '{}')
-    
+
     if (!existingData.users) {
       existingData.users = {}
     }
-    
+
     existingData.users[userId] = {
       profile: {
         goals: goals.value,
@@ -455,13 +333,13 @@ export const useJournalStore = defineStore('journal', () => {
       },
       entries: entries.value
     }
-    
+
     localStorage.setItem('health_journal_data', JSON.stringify(existingData))
   }
 
   function loadFromStorage(userId) {
     const data = JSON.parse(localStorage.getItem('health_journal_data') || '{}')
-    
+
     if (data.users && data.users[userId]) {
       const userData = data.users[userId]
       entries.value = userData.entries || {}
@@ -501,11 +379,8 @@ export const useJournalStore = defineStore('journal', () => {
     getCurrentStreak,
     getTodayProgress,
     updateEntry,
-<<<<<<< HEAD
     updateSleep,
     updateMood,
-=======
->>>>>>> 6b954e5f18338478424b83b21672a7f971dc3989
     addActivity,
     addFood,
     removeActivity,

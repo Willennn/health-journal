@@ -2,13 +2,13 @@
 <template>
   <div class="max-w-4xl mx-auto">
     <!-- Sélecteur de date -->
-    <DateSelector 
+    <DateSelector
       v-model:selectedDate="selectedDate"
     />
 
     <!-- Indicateur de sauvegarde -->
-    <SaveStatus 
-      :status="saveStatus" 
+    <SaveStatus
+      :status="saveStatus"
       :message="saveMessage"
       @clear="clearSaveStatus"
     />
@@ -21,8 +21,8 @@
         @click="activeTab = tab.id"
         :class="[
           'flex-1 px-4 py-3 rounded-md text-sm font-medium transition-all',
-          activeTab === tab.id 
-            ? 'bg-theme-primary text-theme-primary shadow-sm' 
+          activeTab === tab.id
+            ? 'bg-theme-primary text-theme-primary shadow-sm'
             : 'text-theme-muted hover:text-theme-secondary'
         ]"
       >
@@ -83,7 +83,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useJournalStore } from '@/stores/journal'
 import DateSelector from './DateSelector.vue'
 import SaveStatus from './SaveStatus.vue'
@@ -121,7 +121,7 @@ const tabs = [
 const showSaveStatus = (status, message = '') => {
   saveStatus.value = status
   saveMessage.value = message
-  
+
   if (status === 'saved' || status === 'error') {
     setTimeout(() => {
       saveStatus.value = ''
